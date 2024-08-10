@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>books</h1>
+</body>
+
+<script>
+    function Book(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.info = function() {
+            let state;
+            if(read) {
+                state = "read";
+            } else {
+                state = "not read yet";
+            }
+            return `${title} by ${author}, ${pages} pages, ${state}.`
+        }
+    }
+
+    const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+    const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
+
+    console.log(theHobbit.info());
+    console.log(theManWhoWasThursday.info());
+</script>
+
+</html>
