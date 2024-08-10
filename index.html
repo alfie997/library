@@ -8,30 +8,18 @@
 </head>
 <body>
     <h1>books</h1>
+    <form class="details" action="">
+        <label for="">title<input id="title" type="text"></label>
+        <label for="">author<input id="author" type="text"></label>
+        <label for="">pages<input id="pages" type="number" min="1"></label>
+        <label>read?
+            <label for="yes"><input id="yes" type="radio" name="read-book" checked>yes</label>
+            <label for="no"><input id="no" type="radio" name="read-book">no</label>
+        </label>
+        <button class="add" type="button">add book</button>
+    </form>
 </body>
 
-<script>
-    function Book(title, author, pages, read) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.read = read;
-        this.info = function() {
-            let state;
-            if(read) {
-                state = "read";
-            } else {
-                state = "not read yet";
-            }
-            return `${title} by ${author}, ${pages} pages, ${state}.`
-        }
-    }
-
-    const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-    const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
-
-    console.log(theHobbit.info());
-    console.log(theManWhoWasThursday.info());
-</script>
+<script src="main.js"></script>
 
 </html>

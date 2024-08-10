@@ -21,5 +21,8 @@
   #root, #__next {
     isolation: isolate;
   }
-  
-  /* ^reset^ */
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
