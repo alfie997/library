@@ -1,5 +1,7 @@
-const add = document.querySelector(".add");
+const addBook = document.querySelector(".add");
+const newBook = document.querySelector(".new");
 const details = document.querySelector(".details");
+const library = document.querySelector(".library");
 
 const myLibrary = [];
 
@@ -34,6 +36,18 @@ function addBookToLibrary(title, author, pages, read) {
     console.log(myLibrary);
 }
 
+function displayBooks() {
+    for(let i = 0; i < myLibrary.length; i++) {
+        library.innerHTML +=
+        `<tr>
+            <td>${myLibrary[i].title}</td>
+            <td>${myLibrary[i].author}</td>
+            <td>${myLibrary[i].pages}</td>
+            <td>${myLibrary[i].read}</td>
+        </tr>`;
+    }
+}
+
 const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
 myLibrary.push(theHobbit);
 
@@ -43,7 +57,9 @@ myLibrary.push(theManWhoWasThursday);
 console.log(theHobbit.info());
 console.log(theManWhoWasThursday.info());
 
-add.addEventListener("click", (e) => {
+displayBooks();
+
+addBook.addEventListener("click", (e) => {
     bookTitle = document.getElementById("title").value;
     bookAuthor = document.getElementById("author").value;
     bookPages = parseInt(document.getElementById("pages").value);
@@ -55,7 +71,19 @@ add.addEventListener("click", (e) => {
 
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead);
 
+    library.innerHTML +=
+        `<tr>
+            <td>${bookTitle}</td>
+            <td>${bookAuthor}</td>
+            <td>${bookPages}</td>
+            <td>${bookRead}</td>
+        </tr>`;
+
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
     document.getElementById("pages").value = 0;
-})
+});
+
+// newBook.addEventListener("click", (e) => {
+
+// });

@@ -26,3 +26,11 @@
   https://www.joshwcomeau.com/css/custom-css-reset/
 */
 
+.library {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.library th, .library td {
+    border: 1px solid black;
+}

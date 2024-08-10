@@ -18,6 +18,34 @@
         </label>
         <button class="add" type="button">add book</button>
     </form>
+    <button class="new" type="button">new book</button>
+    <dialog open>
+        <p>enter book details:</p>
+        <form method="dialog">
+            <label for="">title<input id="title" type="text"></label>
+            <label for="">author<input id="author" type="text"></label>
+            <label for="">pages<input id="pages" type="number" min="1"></label>
+            <label>read?
+                <label for="yes"><input id="yes" type="radio" name="read-book" checked>yes</label>
+                <label for="no"><input id="no" type="radio" name="read-book">no</label>
+            </label>
+            <button class="add" type="button">add book</button>
+        </form>
+    </dialog>
+    <table class="library">
+        <tr>
+            <th>title</th>
+            <th>author</th>
+            <th>pages</th>
+            <th>read</th>
+        </tr>
+        <!-- <tr>
+            <td>the man who was thursday</td>
+            <td>gk chesterton</td>
+            <td>138</td>
+            <td>yes</td>
+        </tr> -->
+    </table>
 </body>
 
 <script src="main.js"></script>
