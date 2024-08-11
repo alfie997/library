@@ -1,6 +1,6 @@
 const addBook = document.querySelector(".add");
 const newBook = document.querySelector(".new");
-const removeBook = document.querySelector(".remove");
+// const removeBook = document.querySelector(".remove");
 // let removeBook;
 const details = document.querySelector(".details");
 const library = document.querySelector(".library");
@@ -60,27 +60,21 @@ function displayBooks() {
     buttons.push(newButton);
     const currentTr = document.getElementById(`"book${books}"`);
     document.body.insertBefore(newButton, currentTr);
-
-    // library.appendChild(newButton);
 }
 
 function handleButtons() {
-    for(let i = 0; i < buttons.length; i++) {
-        // const button = buttons[i];
-        buttons[i].addEventListener("click", (e) => {
-            // const element = document.querySelector("tr");
-            console.log(i);
-            const element = document.querySelector(`#book${i}`);
-            if(!(element === null)) {
-                element.remove();
-            }
-            buttons[i].remove();
-            myLibrary.splice(i, 1);
-            console.log(myLibrary);
-            buttons.splice(i, 1);
-            console.log(buttons);
-        });
-    }
+    buttons[books-1].addEventListener("click", (e) => {
+        const element = document.querySelector(`#book${books-1}`);
+        if(!(element === null)) {
+            element.remove();
+        }
+        buttons[books-1].remove();
+        myLibrary.splice(books-1, 1);
+        console.log(myLibrary);
+        buttons.splice(books-1, 1);
+        console.log(buttons);
+        books--;
+    });
 }
 
 // const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
@@ -109,10 +103,11 @@ addBook.addEventListener("click", (e) => {
     }
 
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead);
-
     displayBooks();
 
     books++;
+    
+    handleButtons();
 
     bookTitle = '';
     bookAuthor = '';
@@ -121,8 +116,6 @@ addBook.addEventListener("click", (e) => {
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
     document.getElementById("pages").value = 0;
-
-    handleButtons();
 
     dialog.close();
 
