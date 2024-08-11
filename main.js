@@ -6,7 +6,7 @@ const details = document.querySelector(".details");
 const library = document.querySelector(".library");
 const dialog = document.querySelector("dialog");
 
-const buttons = [];
+let buttons = [];
 
 const myLibrary = [];
 
@@ -15,7 +15,7 @@ let bookAuthor = '';
 let bookPages = 0;
 let bookRead = false;
 
-let books = 2;
+let books = 0;
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -41,45 +41,62 @@ function addBookToLibrary(title, author, pages, read) {
     // myLibrary.push(abcOfReading);
     myLibrary.push(book);
     console.log(myLibrary);
+    console.log(buttons);
 }
 
 function displayBooks() {
-    for(let i = 0; i < myLibrary.length; i++) {
-        const newButton = document.createElement("button");
-        newButton.className = "remove";
-        const newContent = document.createTextNode("remove book");
-        newButton.appendChild(newContent);
-        buttons.push(newButton);
+    library.innerHTML +=
+    `<tr id="book${books}">
+        <td>${myLibrary[books].title}</td>
+        <td>${myLibrary[books].author}</td>
+        <td>${myLibrary[books].pages}</td>
+        <td>${myLibrary[books].read}</td>
+    </tr>`;
 
-        library.innerHTML +=
-        `<tr id="book${i}">
-            <td>${myLibrary[i].title}</td>
-            <td>${myLibrary[i].author}</td>
-            <td>${myLibrary[i].pages}</td>
-            <td>${myLibrary[i].read}</td>
-        </tr>`;
+    const newButton = document.createElement("button");
+    newButton.className = "remove";
+    const newContent = document.createTextNode("remove book");
+    newButton.appendChild(newContent);
+    buttons.push(newButton);
+    const currentTr = document.getElementById(`"book${books}"`);
+    document.body.insertBefore(newButton, currentTr);
 
-        const currentTr = document.getElementById(`"book${i}"`);
-        document.body.insertBefore(newButton, currentTr);
+    // library.appendChild(newButton);
+}
 
-        // library.appendChild(newButton);
+function handleButtons() {
+    for(let i = 0; i < buttons.length; i++) {
+        // const button = buttons[i];
+        buttons[i].addEventListener("click", (e) => {
+            // const element = document.querySelector("tr");
+            console.log(i);
+            const element = document.querySelector(`#book${i}`);
+            if(!(element === null)) {
+                element.remove();
+            }
+            buttons[i].remove();
+            myLibrary.splice(i, 1);
+            console.log(myLibrary);
+            buttons.splice(i, 1);
+            console.log(buttons);
+        });
     }
 }
 
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-myLibrary.push(theHobbit);
+// const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+// myLibrary.push(theHobbit);
 
-const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
-myLibrary.push(theManWhoWasThursday);
+// const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
+// myLibrary.push(theManWhoWasThursday);
 
-const abcOfReading = new Book('ABC of Reading', 'Ezra Pound', 224, true);
-myLibrary.push(abcOfReading);
+// const abcOfReading = new Book('ABC of Reading', 'Ezra Pound', 224, true);
+// myLibrary.push(abcOfReading);
 
-console.log(theHobbit.info());
-console.log(theManWhoWasThursday.info());
-console.log(abcOfReading.info());
+// console.log(theHobbit.info());
+// console.log(theManWhoWasThursday.info());
+// console.log(abcOfReading.info());
 
-displayBooks();
+// displayBooks();
 
 addBook.addEventListener("click", (e) => {
     bookTitle = document.getElementById("title").value;
@@ -93,65 +110,70 @@ addBook.addEventListener("click", (e) => {
 
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead);
 
-    const newButton = document.createElement("button");
-    newButton.className = "remove";
-    const newContent = document.createTextNode("remove book");
-    newButton.appendChild(newContent);
-    buttons.push(newButton);
+    displayBooks();
 
-    library.innerHTML +=
-        `<tr id="book${books}">
-            <td>${bookTitle}</td>
-            <td>${bookAuthor}</td>
-            <td>${bookPages}</td>
-            <td>${bookRead}</td>
-        </tr>`;
+    books++;
 
-    const currentTr = document.getElementById(`"book${books}"`);
-    document.body.insertBefore(newButton, currentTr);
-
-    for(let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", (e) => {
-            const element = document.querySelector("tr");
-            if(!(element === null)) {
-                element.remove();
-            }
-        });
-    }
-
-    // library.appendChild(newButton);
+    bookTitle = '';
+    bookAuthor = '';
+    bookPages = 0;
 
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
     document.getElementById("pages").value = 0;
 
-    books++;
+    handleButtons();
 
     dialog.close();
+
+    // library.innerHTML +=
+    //     `<tr id="book${books}">
+    //         <td>${bookTitle}</td>
+    //         <td>${bookAuthor}</td>
+    //         <td>${bookPages}</td>
+    //         <td>${bookRead}</td>
+    //     </tr>`;
+
+    // const newButton = document.createElement("button");
+    // newButton.className = "remove";
+    // const newContent = document.createTextNode("remove book");
+    // newButton.appendChild(newContent);
+    // buttons.push(newButton);
+    // const currentTr = document.getElementById(`"book${books}"`);
+    // document.body.insertBefore(newButton, currentTr);
+
+    // for(let i = 0; i < buttons.length; i++) {
+    //     buttons[i].addEventListener("click", (e) => {
+    //         const element = document.querySelector("tr");
+    //         if(!(element === null)) {
+    //             element.remove();
+    //         }
+    //     });
+    // }
+
+    // library.appendChild(newButton);
 });
 
 newBook.addEventListener("click", (e) => {
     dialog.showModal();
 });
 
-for(let i = 0; i < buttons.length; i++) {
-    // const button = buttons[i];
-    buttons[i].addEventListener("click", (e) => {
-        const element = document.querySelector("tr");
-        if(!(element === null)) {
-            element.remove();
-        }
-        
-        // removeBook.remove();
-        // library.innerHTML -= `
-        //     <tr>
-        //         <td>${bookTitle}</td>
-        //         <td>${bookAuthor}</td>
-        //         <td>${bookPages}</td>
-        //         <td>${bookRead}</td>
-        //     </tr>`;
-    });
-}
+// for(let i = 0; i < buttons.length; i++) {
+//     // const button = buttons[i];
+//     buttons[i].addEventListener("click", (e) => {
+//         // const element = document.querySelector("tr");
+//         console.log(i);
+//         const element = document.querySelector(`#book${i}`);
+//         if(!(element === null)) {
+//             element.remove();
+//         }
+//         buttons[i].remove();
+//         myLibrary.splice(i, 1);
+//         console.log(myLibrary);
+//         buttons.splice(i, 1);
+//         console.log(buttons);
+//     });
+// }
 
 // removeBook.addEventListener("click", (e) => {
 //     // removeBook.remove();

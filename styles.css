@@ -26,11 +26,26 @@
   https://www.joshwcomeau.com/css/custom-css-reset/
 */
 
+/* body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+button {
+  grid-column: 1 / 2;
+}
+
+.remove {
+  grid-column: 2 / 3;
+} */
+
 .library {
-    border: 1px solid black;
-    border-collapse: collapse;
+  /* grid-column: 1 / 2; */
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 
 .library th, .library td {
-    border: 1px solid black;
+  border: 1px solid black;
 }
+
