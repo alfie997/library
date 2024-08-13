@@ -6,7 +6,7 @@ const details = document.querySelector(".details");
 const library = document.querySelector(".library");
 const dialog = document.querySelector("dialog");
 
-let buttons = [];
+const buttons = [];
 
 const myLibrary = [];
 
@@ -15,7 +15,7 @@ let bookAuthor = '';
 let bookPages = 0;
 let bookRead = false;
 
-let books = 0;
+// let books = 0;
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -44,7 +44,7 @@ function addBookToLibrary(title, author, pages, read) {
     console.log(buttons);
 }
 
-function displayBooks() {
+function displayBooks(books) {
     library.innerHTML +=
     `<tr id="book${books}">
         <td>${myLibrary[books].title}</td>
@@ -53,13 +53,37 @@ function displayBooks() {
         <td>${myLibrary[books].read}</td>
     </tr>`;
 
-    const newButton = document.createElement("button");
-    newButton.className = "remove";
-    const newContent = document.createTextNode("remove book");
-    newButton.appendChild(newContent);
-    buttons.push(newButton);
-    const currentTr = document.getElementById(`"book${books}"`);
-    document.body.insertBefore(newButton, currentTr);
+    // const newButton = document.createElement("button");
+    // newButton.className = "remove";
+    // const newContent = document.createTextNode("remove book");
+    // newButton.appendChild(newContent);
+    // buttons.push(newButton);
+    // const newTd = document.createElement("td");
+    // // newTr.innerHTML = newButton;
+    // newTd.appendChild(newButton);
+    // console.log(newTd);
+    // const currentTr = document.getElementById("book0");
+    // console.log(currentTr);
+    // // document.body.insertBefore(newTd, currentTr);
+    // currentTr.appendChild(newTd);
+}
+
+function displayButtons() {
+    for(let i = 0; i < myLibrary.length; i++) {
+        const newButton = document.createElement("button");
+        newButton.className = "remove";
+        const newContent = document.createTextNode("remove book");
+        newButton.appendChild(newContent);
+        buttons.push(newButton);
+        const newTd = document.createElement("td");
+        // newTr.innerHTML = newButton;
+        newTd.appendChild(newButton);
+        console.log(newTd);
+        const currentTr = document.getElementById(`book${i}`);
+        console.log(currentTr);
+        // document.body.insertBefore(newTd, currentTr);
+        currentTr.appendChild(newTd);
+    }
 }
 
 function handleButtons() {
@@ -77,20 +101,34 @@ function handleButtons() {
     });
 }
 
-// const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-// myLibrary.push(theHobbit);
-
-// const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
-// myLibrary.push(theManWhoWasThursday);
-
-// const abcOfReading = new Book('ABC of Reading', 'Ezra Pound', 224, true);
-// myLibrary.push(abcOfReading);
+const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+myLibrary.push(theHobbit);
+const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
+myLibrary.push(theManWhoWasThursday);
+const abcOfReading = new Book('ABC of Reading', 'Ezra Pound', 224, true);
+myLibrary.push(abcOfReading);
 
 // console.log(theHobbit.info());
 // console.log(theManWhoWasThursday.info());
 // console.log(abcOfReading.info());
 
-// displayBooks();
+for(let i = 0; i < myLibrary.length; i++) {
+    displayBooks(i);
+
+    // buttons[i].addEventListener("click", (e) => {
+    //     const element = document.querySelector(`#book${i}`);
+    //     if(!(element === null)) {
+    //         element.remove();
+    //     }
+    //     buttons[i].remove();
+    //     myLibrary.splice(i, 1);
+    //     console.log(myLibrary);
+    //     buttons.splice(i, 1);
+    //     console.log(buttons);
+    // });
+}
+
+displayButtons();
 
 addBook.addEventListener("click", (e) => {
     bookTitle = document.getElementById("title").value;
