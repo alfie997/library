@@ -46,10 +46,10 @@ function displayBooks() {
     const element = document.createElement("tr");
     element.setAttribute("id", `book${books}`);
     element.innerHTML =
-    `<td>${myLibrary[books].title}</td>
-    <td>${myLibrary[books].author}</td>
-    <td>${myLibrary[books].pages}</td>
-    <td>${myLibrary[books].read}</td>`;
+        `<td>${myLibrary[books].title}</td>
+        <td>${myLibrary[books].author}</td>
+        <td>${myLibrary[books].pages}</td>
+        <td>${myLibrary[books].read}</td>`;
     library.appendChild(element);
 
     // library.innerHTML +=
@@ -77,28 +77,61 @@ function displayButtons() {
 
         const newTd = document.createElement("td");
         newTd.appendChild(newButton);
-        console.log(newTd);
+        // console.log(newTd);
 
         const currentTr = document.getElementById(`book${books}`);
-        console.log(currentTr);
+        // console.log(currentTr);
         currentTr.appendChild(newTd);
         // buttons.push(newTd);
     // }
 }
 
 function handleButtons() {
+    // for(let i = 0; i < buttons.length; i++) {
+    //     buttons[i].addEventListener("click", (e) => {
+    //         // console.log(e instanceof Event);
+    //         const element = document.querySelector(`#book${i}`);
+    //         if(!(element === null)) {
+    //             element.remove();
+    //         }
+    //         if(!(buttons[i] === undefined)) {
+    //             buttons[i].remove();
+    //         }
+    //         myLibrary.splice(i, 1);
+    //         console.log(myLibrary);
+    //         buttons.splice(i, 1);
+    //         console.log(buttons);
+    //         console.log(buttons.length);
+    //         books = i;
+    //         console.log(books);
+    //     });
+    // }
+
+    let book = null;
+
     for(let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", (e) => {
-            const element = document.querySelector(`#book${i}`).parentElement;
-            if(!(element === null)) {
-                element.remove();
-            }
-            buttons[i].remove();
-            myLibrary.splice(i, 1);
-            console.log(myLibrary);
-            buttons.splice(i, 1);
-            console.log(buttons);
+        buttons[i].addEventListener("mouseenter", (e) => {
+            // console.log(e);
+            book = i;
+            console.log(book);
         });
+
+        // if(!(book === null)) {
+            buttons[i].addEventListener("click", (e) => {
+                console.log(book);
+                // books--;
+                const element = document.querySelector(`#book${book}`);
+                if(!(element === null)) {
+                    element.remove();
+                }
+                // buttons[book].remove();
+                myLibrary.splice(book, 1);
+                console.log(myLibrary);
+                buttons.splice(book, 1);
+                console.log(buttons);
+                books--;
+            });
+        // }
     }
 }
 
@@ -137,12 +170,36 @@ newBook.addEventListener("click", (e) => {
     dialog.showModal();
 });
 
-// const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-// myLibrary.push(theHobbit);
-// const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
-// myLibrary.push(theManWhoWasThursday);
-// const abcOfReading = new Book('ABC of Reading', 'Ezra Pound', 224, true);
-// myLibrary.push(abcOfReading);
+const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+myLibrary.push(theHobbit);
+displayBooks();
+displayButtons();
+handleButtons();
+books++;
+
+const theManWhoWasThursday = new Book('The Man Who Was Thursday', 'G.K. Chesterton', 138, true);
+myLibrary.push(theManWhoWasThursday);
+displayBooks();
+displayButtons();
+handleButtons();
+books++;
+
+const abcOfReading = new Book('ABC of Reading', 'Ezra Pound', 224, true);
+myLibrary.push(abcOfReading);
+displayBooks();
+displayButtons();
+handleButtons();
+books++;
+
+const languageTruthAndLogic = new Book('Language, Truth, and Logic', 'A.J. Ayer', 160, false);
+myLibrary.push(languageTruthAndLogic);
+displayBooks();
+displayButtons();
+handleButtons();
+books++;
+
+console.log(myLibrary);
+console.log(buttons);
 
 // console.log(theHobbit.info());
 // console.log(theManWhoWasThursday.info());
