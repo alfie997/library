@@ -4,9 +4,10 @@ const details = document.querySelector(".details");
 const library = document.querySelector(".library");
 const dialog = document.querySelector("dialog");
 
-const buttons = [];
-
 const myLibrary = [];
+
+const buttons = [];
+const states = [];
 
 let bookTitle = '';
 let bookAuthor = '';
@@ -24,12 +25,22 @@ function Book(title, author, pages, read) {
     this.read = read;
     this.info = function() {
         let state;
-        if(read) {
+        if (read) {
             state = "read";
         } else {
             state = "not read yet";
         }
         return `${title} by ${author}, ${pages} pages, ${state}.`
+    }
+    this.getRead = function() {
+        return read;
+    }
+    this.setRead = function() {
+        if (read === true) {
+            read = false;
+        } else {
+            read = true;
+        }
     }
 }
 
@@ -84,54 +95,102 @@ function displayButtons() {
         currentTr.appendChild(newTd);
         // buttons.push(newTd);
     // }
+
+    const newButton2 = document.createElement("button");
+    newButton2.className = "read";
+    const newContent2 = document.createTextNode("read");
+    newButton2.appendChild(newContent2);
+    states.push(newButton2);
+
+    const newTd2 = document.createElement("td");
+    newTd2.appendChild(newButton2);
+
+    currentTr.appendChild(newTd2);
 }
 
 function handleButtons() {
+    // let clicked = true;
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", (e) => {
+            // console.log(e instanceof Event);
+            const element = document.querySelector(`#book${i}`);
+            if (!(element === null)) {
+                element.remove();
+            }
+            // if(!(buttons[i] === undefined)) {
+            //     buttons[i].remove();
+            // }
+            myLibrary.splice(i, 1);
+            console.log(myLibrary);
+            buttons.splice(i, 1);
+            console.log(buttons);
+            console.log(buttons.length);
+            books = i;
+            console.log(books);
+            // clicked = false;
+        });
+        // if (clicked) break;
+    }
+
+    // let book = null;
+    // let enter = false;
+
     // for(let i = 0; i < buttons.length; i++) {
-    //     buttons[i].addEventListener("click", (e) => {
-    //         // console.log(e instanceof Event);
-    //         const element = document.querySelector(`#book${i}`);
-    //         if(!(element === null)) {
-    //             element.remove();
-    //         }
-    //         if(!(buttons[i] === undefined)) {
-    //             buttons[i].remove();
-    //         }
-    //         myLibrary.splice(i, 1);
-    //         console.log(myLibrary);
-    //         buttons.splice(i, 1);
-    //         console.log(buttons);
-    //         console.log(buttons.length);
-    //         books = i;
-    //         console.log(books);
+    //     // console.log(book);
+    //     buttons[i].addEventListener("mouseenter", (e) => {
+    //         // console.log(e);
+    //         book = i;
+    //         console.log(book);
+    //         // enter = true;
+    //         // console.log(enter);
     //     });
+
+    //     if(!(book === null)) {
+    //         buttons[i].addEventListener("click", (e) => {
+    //             // if(enter === true) {
+    //                 console.log(book);
+    //                 // books--;
+    //                 const element = document.querySelector(`#book${book}`);
+    //                 if(!(element === null)) {
+    //                     element.remove();
+    //                 }
+    //                 // buttons[book].remove();
+    //                 myLibrary.splice(book, 1);
+    //                 console.log(myLibrary);
+    //                 buttons.splice(book, 1);
+    //                 console.log(buttons);
+    //                 books--;
+    //                 book = null;
+    //                 // enter = false;
+    //             // }
+    //         });
+    //     }
     // }
 
-    let book = null;
+    // buttons[books].addEventListener("click", (e) => {
+    //     books--;
+    //     const element = document.querySelector(`#book${books}`);
+    //     if(!(element === null)) {
+    //         element.remove();
+    //     }
+    //     myLibrary.splice(books, 1);
+    //     console.log(myLibrary);
+    //     buttons.splice(books, 1);
+    //     console.log(buttons);
+    // });
 
-    for(let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("mouseenter", (e) => {
-            // console.log(e);
-            book = i;
-            console.log(book);
+    for(let i = 0; i < states.length; i++) {
+        states[i].addEventListener("click", (e) => {
+            const element = document.querySelector(`#book${i}`);
+            const child = element.children[3];
+            if (myLibrary[i].getRead()) {
+                child.innerHTML = false;
+            } else if (!(myLibrary[i].getRead())) {
+                child.innerHTML = true;
+            }
+            myLibrary[i].setRead();
+            console.log(myLibrary[i].info());
         });
-
-        // if(!(book === null)) {
-            buttons[i].addEventListener("click", (e) => {
-                console.log(book);
-                // books--;
-                const element = document.querySelector(`#book${book}`);
-                if(!(element === null)) {
-                    element.remove();
-                }
-                // buttons[book].remove();
-                myLibrary.splice(book, 1);
-                console.log(myLibrary);
-                buttons.splice(book, 1);
-                console.log(buttons);
-                books--;
-            });
-        // }
     }
 }
 
@@ -139,9 +198,9 @@ addBook.addEventListener("click", (e) => {
     bookTitle = document.getElementById("title").value;
     bookAuthor = document.getElementById("author").value;
     bookPages = parseInt(document.getElementById("pages").value);
-    if(document.getElementById("yes").checked) {
+    if (document.getElementById("yes").checked) {
         bookRead = true;
-    } else if(document.getElementById("no").checked) {
+    } else if (document.getElementById("no").checked) {
         bookRead = false;
     }
 
