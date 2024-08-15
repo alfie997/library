@@ -8,6 +8,7 @@ const myLibrary = [];
 
 const buttons = [];
 const states = [];
+let rows = [];
 
 let bookTitle = '';
 let bookAuthor = '';
@@ -109,31 +110,80 @@ function displayButtons() {
 }
 
 function handleButtons() {
-    // let clicked = true;
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", (e) => {
-            // console.log(e instanceof Event);
-            const element = document.querySelector(`#book${i}`);
-            if (!(element === null)) {
-                element.remove();
-            }
-            // if(!(buttons[i] === undefined)) {
-            //     buttons[i].remove();
-            // }
-            myLibrary.splice(i, 1);
-            console.log(myLibrary);
-            buttons.splice(i, 1);
-            console.log(buttons);
-            console.log(buttons.length);
-            books = i;
-            console.log(books);
-            // clicked = false;
+    let book = null;
+
+    const elements = document.querySelectorAll("tr");
+    rows = [].slice.call(elements, 1);
+
+    for (let i = 0; i < rows.length; i++) {
+        rows[i].addEventListener("mouseenter", (e) => {
+            book = i;
+            console.log(book);
+            console.log(rows);
         });
-        // if (clicked) break;
     }
 
+    buttons[books].addEventListener("click", (e) => {
+        books--;
+        const element = document.querySelector(`#book${book}`);
+        if(!(element === null)) {
+            element.remove();
+        }
+        myLibrary.splice(book, 1);
+        console.log(myLibrary);
+        buttons.splice(book, 1);
+        console.log(buttons);
+        states.splice(book, 1);
+        console.log(states);
+        rows.splice(book, 1);
+    });
+
+    states[books].addEventListener("click", (e) => {
+        const element = document.querySelector(`#book${book}`);
+        const child = element.children[3];
+        if (myLibrary[book].getRead()) {
+            child.innerHTML = false;
+        } else if (!(myLibrary[book].getRead())) {
+            child.innerHTML = true;
+        }
+        myLibrary[book].setRead();
+        console.log(myLibrary[book].info());
+    });
+
+    // for (let i = 0; i < elements.length; i++) {
+    //     states[i].addEventListener("mouseenter", (e) => {
+    //         book = i;
+    //         console.log(book);
+    //     });
+    // }
+
+    // let clicked = true;
+    // for (let i = 0; i < buttons.length; i++) {
+    //     buttons[i].addEventListener("click", (e) => {
+    //         // console.log(e instanceof Event);
+    //         const element = document.querySelector(`#book${i}`);
+    //         if (!(element === null)) {
+    //             element.remove();
+    //         }
+    //         // if(!(buttons[i] === undefined)) {
+    //         //     buttons[i].remove();
+    //         // }
+    //         myLibrary.splice(i, 1);
+    //         console.log(myLibrary);
+    //         buttons.splice(i, 1);
+    //         console.log(buttons);
+    //         states.splice(i, 1);
+    //         console.log(states);
+    //         console.log(buttons.length);
+    //         books = i;
+    //         console.log(books);
+    //         // clicked = false;
+    //     });
+    //     // if (clicked) break;
+    // }
+
     // let book = null;
-    // let enter = false;
+    // // let enter = false;
 
     // for(let i = 0; i < buttons.length; i++) {
     //     // console.log(book);
@@ -144,6 +194,7 @@ function handleButtons() {
     //         // enter = true;
     //         // console.log(enter);
     //     });
+    // }
 
     //     if(!(book === null)) {
     //         buttons[i].addEventListener("click", (e) => {
@@ -167,31 +218,19 @@ function handleButtons() {
     //     }
     // }
 
-    // buttons[books].addEventListener("click", (e) => {
-    //     books--;
-    //     const element = document.querySelector(`#book${books}`);
-    //     if(!(element === null)) {
-    //         element.remove();
-    //     }
-    //     myLibrary.splice(books, 1);
-    //     console.log(myLibrary);
-    //     buttons.splice(books, 1);
-    //     console.log(buttons);
-    // });
-
-    for(let i = 0; i < states.length; i++) {
-        states[i].addEventListener("click", (e) => {
-            const element = document.querySelector(`#book${i}`);
-            const child = element.children[3];
-            if (myLibrary[i].getRead()) {
-                child.innerHTML = false;
-            } else if (!(myLibrary[i].getRead())) {
-                child.innerHTML = true;
-            }
-            myLibrary[i].setRead();
-            console.log(myLibrary[i].info());
-        });
-    }
+    // for(let i = 0; i < states.length; i++) {
+    //     states[i].addEventListener("click", (e) => {
+    //         const element = document.querySelector(`#book${i}`);
+    //         const child = element.children[3];
+    //         if (myLibrary[i].getRead()) {
+    //             child.innerHTML = false;
+    //         } else if (!(myLibrary[i].getRead())) {
+    //             child.innerHTML = true;
+    //         }
+    //         myLibrary[i].setRead();
+    //         console.log(myLibrary[i].info());
+    //     });
+    // }
 }
 
 addBook.addEventListener("click", (e) => {
@@ -259,6 +298,7 @@ books++;
 
 console.log(myLibrary);
 console.log(buttons);
+console.log(states);
 
 // console.log(theHobbit.info());
 // console.log(theManWhoWasThursday.info());
