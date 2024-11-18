@@ -81,19 +81,20 @@ function displayButtons() {
         //     buttons.splice(i, 1);
         // }
 
-        const newButton = document.createElement("button");
-        newButton.className = "remove";
-        const newContent = document.createTextNode("remove book");
-        newButton.appendChild(newContent);
-        buttons.push(newButton);
+    const newButton = document.createElement("button");
+    newButton.className = "remove";
+    newButton.id = `button${books}`;
+    const newContent = document.createTextNode("remove book");
+    newButton.appendChild(newContent);
+    buttons.push(newButton);
 
-        const newTd = document.createElement("td");
-        newTd.appendChild(newButton);
-        // console.log(newTd);
+    const newTd = document.createElement("td");
+    newTd.appendChild(newButton);
+    // console.log(newTd);
 
-        const currentTr = document.getElementById(`book${books}`);
-        // console.log(currentTr);
-        currentTr.appendChild(newTd);
+    const currentTr = document.getElementById(`book${books}`);
+    // console.log(currentTr);
+    currentTr.appendChild(newTd);
         // buttons.push(newTd);
     // }
 
@@ -110,21 +111,32 @@ function displayButtons() {
 }
 
 function handleButtons() {
-    let book = null;
+    // let book = null;
 
-    const elements = document.querySelectorAll("tr");
-    rows = [].slice.call(elements, 1);
+    // const elements = document.querySelectorAll("tr");
+    // rows = [].slice.call(elements, 1);
 
-    for (let i = 0; i < rows.length; i++) {
-        rows[i].addEventListener("mouseenter", (e) => {
-            book = i;
-            console.log(book);
-            console.log(rows);
-        });
-    }
+    // function getRow() {
+        // for (let i = 0; i < rows.length; i++) {
+        //     rows[i].addEventListener("mouseenter", (e) => {
+        //         book = i;
+        //         console.log(book);
+        //         // console.log(rows);
+        //     });
+        // }
+    // }
+    // getRow();
 
     buttons[books].addEventListener("click", (e) => {
-        books--;
+        let book = null;
+
+        // for (let i = 0; i < buttons.length; i++) {
+        //     const currentTr = document.getElementById(`book${i}`);
+
+        // }
+
+        // if (currentTr)
+
         const element = document.querySelector(`#book${book}`);
         if(!(element === null)) {
             element.remove();
@@ -136,6 +148,11 @@ function handleButtons() {
         states.splice(book, 1);
         console.log(states);
         rows.splice(book, 1);
+        books--;
+
+        // handleButtons();
+        // displayButtons();
+        // getRow();
     });
 
     states[books].addEventListener("click", (e) => {
@@ -149,88 +166,6 @@ function handleButtons() {
         myLibrary[book].setRead();
         console.log(myLibrary[book].info());
     });
-
-    // for (let i = 0; i < elements.length; i++) {
-    //     states[i].addEventListener("mouseenter", (e) => {
-    //         book = i;
-    //         console.log(book);
-    //     });
-    // }
-
-    // let clicked = true;
-    // for (let i = 0; i < buttons.length; i++) {
-    //     buttons[i].addEventListener("click", (e) => {
-    //         // console.log(e instanceof Event);
-    //         const element = document.querySelector(`#book${i}`);
-    //         if (!(element === null)) {
-    //             element.remove();
-    //         }
-    //         // if(!(buttons[i] === undefined)) {
-    //         //     buttons[i].remove();
-    //         // }
-    //         myLibrary.splice(i, 1);
-    //         console.log(myLibrary);
-    //         buttons.splice(i, 1);
-    //         console.log(buttons);
-    //         states.splice(i, 1);
-    //         console.log(states);
-    //         console.log(buttons.length);
-    //         books = i;
-    //         console.log(books);
-    //         // clicked = false;
-    //     });
-    //     // if (clicked) break;
-    // }
-
-    // let book = null;
-    // // let enter = false;
-
-    // for(let i = 0; i < buttons.length; i++) {
-    //     // console.log(book);
-    //     buttons[i].addEventListener("mouseenter", (e) => {
-    //         // console.log(e);
-    //         book = i;
-    //         console.log(book);
-    //         // enter = true;
-    //         // console.log(enter);
-    //     });
-    // }
-
-    //     if(!(book === null)) {
-    //         buttons[i].addEventListener("click", (e) => {
-    //             // if(enter === true) {
-    //                 console.log(book);
-    //                 // books--;
-    //                 const element = document.querySelector(`#book${book}`);
-    //                 if(!(element === null)) {
-    //                     element.remove();
-    //                 }
-    //                 // buttons[book].remove();
-    //                 myLibrary.splice(book, 1);
-    //                 console.log(myLibrary);
-    //                 buttons.splice(book, 1);
-    //                 console.log(buttons);
-    //                 books--;
-    //                 book = null;
-    //                 // enter = false;
-    //             // }
-    //         });
-    //     }
-    // }
-
-    // for(let i = 0; i < states.length; i++) {
-    //     states[i].addEventListener("click", (e) => {
-    //         const element = document.querySelector(`#book${i}`);
-    //         const child = element.children[3];
-    //         if (myLibrary[i].getRead()) {
-    //             child.innerHTML = false;
-    //         } else if (!(myLibrary[i].getRead())) {
-    //             child.innerHTML = true;
-    //         }
-    //         myLibrary[i].setRead();
-    //         console.log(myLibrary[i].info());
-    //     });
-    // }
 }
 
 addBook.addEventListener("click", (e) => {
