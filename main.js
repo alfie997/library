@@ -19,31 +19,60 @@ let books = 0;
 
 // document.body.onload = displayButtons;
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = function() {
-        let state;
-        if (read) {
-            state = "read";
-        } else {
-            state = "not read yet";
-        }
-        return `${title} by ${author}, ${pages} pages, ${state}.`
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
     }
-    this.getRead = function() {
-        return read;
+
+    // get info() {
+    //     if (this.read) {
+    //         return `${this.title} by ${this.author}, ${this.pages} pages, read.`;
+    //     } else {
+    //         return `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`;
+    //     }
+    // }
+
+    get getState() {
+        return this.read;
     }
-    this.setRead = function() {
-        if (read === true) {
-            read = false;
+
+    set setState(x) {
+        if (this.read === true) {
+            this.read = false;
         } else {
-            read = true;
+            this.read = true;
         }
     }
 }
+
+// function Book(title, author, pages, read) {
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.read = read;
+//     this.info = function() {
+//         let state;
+//         if (read) {
+//             state = "read";
+//         } else {
+//             state = "not read yet";
+//         }
+//         return `${title} by ${author}, ${pages} pages, ${state}.`
+//     }
+//     this.getRead = function() {
+//         return read;
+//     }
+//     this.setRead = function() {
+//         if (read === true) {
+//             read = false;
+//         } else {
+//             read = true;
+//         }
+//     }
+// }
 
 function addBookToLibrary(title, author, pages, read) {
     const book = new Book(title, author, pages, read);
@@ -111,24 +140,24 @@ function displayButtons() {
 }
 
 function handleButtons() {
-    // let book = null;
+    let book = null;
 
-    // const elements = document.querySelectorAll("tr");
-    // rows = [].slice.call(elements, 1);
+    const elements = document.querySelectorAll("tr");
+    rows = [].slice.call(elements, 1);
 
     // function getRow() {
-        // for (let i = 0; i < rows.length; i++) {
-        //     rows[i].addEventListener("mouseenter", (e) => {
-        //         book = i;
-        //         console.log(book);
-        //         // console.log(rows);
-        //     });
-        // }
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].addEventListener("mouseenter", (e) => {
+                book = i;
+                console.log(book);
+                // console.log(rows);
+            });
+        }
     // }
     // getRow();
 
     buttons[books].addEventListener("click", (e) => {
-        let book = null;
+        // let book = null;
 
         // for (let i = 0; i < buttons.length; i++) {
         //     const currentTr = document.getElementById(`book${i}`);
@@ -137,6 +166,7 @@ function handleButtons() {
 
         // if (currentTr)
 
+        books--;
         const element = document.querySelector(`#book${book}`);
         if(!(element === null)) {
             element.remove();
@@ -148,7 +178,6 @@ function handleButtons() {
         states.splice(book, 1);
         console.log(states);
         rows.splice(book, 1);
-        books--;
 
         // handleButtons();
         // displayButtons();
@@ -158,13 +187,19 @@ function handleButtons() {
     states[books].addEventListener("click", (e) => {
         const element = document.querySelector(`#book${book}`);
         const child = element.children[3];
-        if (myLibrary[book].getRead()) {
+        // if (myLibrary[book].getRead()) {
+        //     child.innerHTML = false;
+        // } else if (!(myLibrary[book].getRead())) {
+        //     child.innerHTML = true;
+        // }
+        if (myLibrary[book].getState) {
             child.innerHTML = false;
-        } else if (!(myLibrary[book].getRead())) {
+        } else if (!(myLibrary[book].getState)) {
             child.innerHTML = true;
         }
-        myLibrary[book].setRead();
-        console.log(myLibrary[book].info());
+        // myLibrary[book].setRead();
+        myLibrary[book].setState = true;
+        // console.log(myLibrary[book].info());
     });
 }
 
